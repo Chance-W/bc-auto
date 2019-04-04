@@ -38,8 +38,10 @@ public class Portal {
     public <T extends Menu> T openMenu(String menuName, Class<T> clazz) throws IllegalAccessException, InstantiationException {
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("js-all-menu")));
         driver.findElement(By.className("js-all-menu")).click();
-        driver.findElement(By.id("searchMenuInput")).sendKeys(menuName);
-        driver.findElement(By.className("glyphicon-search")).click();
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("searchMenuInput"))).sendKeys(menuName);
+//        driver.findElement(By.id("searchMenuInput")).sendKeys(menuName);
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("glyphicon-search"))).click();
+//        driver.findElement(By.className("glyphicon-search")).click();
 
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div/div/section[1]/header/div/div[3]/div[1]/div[5]/div[2]/div[2]/div[1]/dl/dd/ul/li/a/span")));
         //点击查询出来的结果
