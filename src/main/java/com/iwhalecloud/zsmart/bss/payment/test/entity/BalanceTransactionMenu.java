@@ -3,6 +3,9 @@ package com.iwhalecloud.zsmart.bss.payment.test.entity;
 import com.iwhalecloud.zsmart.bss.payment.test.intf.Menu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import com.iwhalecloud.zsmart.bss.payment.test.entity.GetTime;
+
+import java.text.ParseException;
 
 public class BalanceTransactionMenu extends Menu {
 
@@ -40,4 +43,32 @@ public class BalanceTransactionMenu extends Menu {
         driver.findElement(By.xpath("//*[@id=\"balTransQuery\"]/form/div[3]/div/div/button[1]")).click();
 
     }
+    //增加账本
+    public void addAccountBalance () throws ParseException {
+
+        driver.findElement(By.xpath("//*[@id=\"tabs-acct-balance\"]/div/div/div[1]/div/div[4]/div/span[3]")).click();
+        //JavascriptExecutor js=(JavascriptExecutor) driver;
+        //js.executeScript("$('.ui-dialog').find('input[name=\"acctResId\"]'.combobox('value', 11294)");
+        driver.executeScript("$('.ui-dialog').find('input[name=\"acctResId\"]').combobox('value', 11294)");
+        driver.findElement(By.xpath("/html/body/div[3]/div[2]/form/div[2]/div/div[1]/div[1]/input[1]")).sendKeys("20");
+        //js.executeScript("$('.ui-dialog').find('input[name=\"unitId\"]'.combobox('value', GB)");
+        driver.executeScript("$('.ui-dialog').find('input[name=\"unitId\"]').combobox('value', 6)");
+        String dateBcFormat1= new GetTime().dateBcFormat1;
+        String dateBcFormat2= new GetTime().dateBcFormat2;
+        //获取当前时间
+        driver.executeScript("$('input[name=\"effDate\"]').datetimepicker({format:'dd.mm.yyyy hh:ii:ss'}).val(\"" +
+                dateBcFormat1 +
+                "\")");
+        //结束时间
+        driver.executeScript("$('input[name=\"expDate\"]').datetimepicker({format:'dd.mm.yyyy hh:ii:ss'}).val(\"" +
+                dateBcFormat2 +
+                "\")");
+        driver.findElement(By.xpath("/html/body/div[4]/div[3]/div/div/button[1]")).click();
+
+
+
+
+    }
+
+
 }
