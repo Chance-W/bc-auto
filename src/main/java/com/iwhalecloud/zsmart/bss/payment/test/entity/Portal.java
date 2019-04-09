@@ -2,6 +2,8 @@ package com.iwhalecloud.zsmart.bss.payment.test.entity;
 
 import com.iwhalecloud.zsmart.bss.payment.test.intf.Menu;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,7 +12,6 @@ public class Portal {
 
     ChromeDriver driver;
     WebDriverWait webDriverWait;
-
 
     public Portal(ChromeDriver driver, WebDriverWait webDriverWait) {
         //构造函数不能加实现
@@ -36,7 +37,17 @@ public class Portal {
     //菜单查询框查询菜单
     public <T extends Menu> T openMenu(String menuName, Class<T> clazz) throws IllegalAccessException, InstantiationException {
 
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(By.className("js-all-menu"))).click();
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(By.className("js-all-menu")));
+
+        //把所有可能会抛出错误的代码都放在try语句块中，而把那些用于错误处理的代码放在catch块中
+        try {
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(By.className("js-bz-div")));
+            driver.findElementByClassName("js-close").click();
+        }
+        catch (NoSuchElementException | TimeoutException e) {
+            System.out.println(e);
+        }
+        driver.findElementByClassName("js-all-menu").click();
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(By.id("searchMenuInput"))).sendKeys(menuName);
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("glyphicon-search"))).click();
