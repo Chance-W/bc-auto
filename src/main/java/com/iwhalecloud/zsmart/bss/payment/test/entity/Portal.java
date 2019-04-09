@@ -42,7 +42,8 @@ public class Portal {
         //把所有可能会抛出错误的代码都放在try语句块中，而把那些用于错误处理的代码放在catch块中
         try {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(By.className("js-bz-div")));
-            driver.findElementByClassName("js-close").click();
+//            driver.findElementByClassName("js-close").click();
+            driver.findElement(By.xpath("/html/body/div[3]/div[3]/button[1]")).click();
         }
         catch (NoSuchElementException | TimeoutException e) {
             System.out.println(e);

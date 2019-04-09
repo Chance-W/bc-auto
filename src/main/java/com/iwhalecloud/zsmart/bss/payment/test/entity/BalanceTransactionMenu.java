@@ -48,6 +48,24 @@ public class BalanceTransactionMenu extends Menu {
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("icon-success")));
     }
 
+    /**对查询出来的号码进行VC充值
+     * @author yue.wenjuan
+     * @version 1.0
+     * @CreateDate 2019-04-09
+     */
+    public void vcRecharge(String cardPwd,String subsId){
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("js-vcrecharge"))).click();
+        //选择充值号码,这里传的值是subsId
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[3]/div[2]/form/div[1]/div/div/div/input")));
+        driver.executeScript("$('.col-sm-12').find('input[name=\"accNbr\"]').combobox('value', " + subsId + ")");
+        //输入vc卡密
+        driver.findElement(By.xpath("/html/body/div[3]/div[2]/form/div[4]/div/div/input")).sendKeys(cardPwd);
+
+        driver.findElement(By.className("js-ok")).click();
+        //等待充值结果
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("ui-dialog")));
+    }
+
     /**
      * @author yue.wenjuan
      * @version 1.0
